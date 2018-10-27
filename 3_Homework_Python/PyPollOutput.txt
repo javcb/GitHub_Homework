@@ -1,0 +1,3 @@
+           Voter ID   County  Percent
+Candidate                            
+Khan        2218231  2218231     0.63
