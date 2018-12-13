@@ -42,10 +42,12 @@ inner join film_actor on film.film_id = film_actor.film_id;
 select count(inventory_id) as inventory_count from inventory where film_id = 439;
 
 -- 6e
-select staff.first_name, staff.last_name, sum(payment.amount) as total_payment from staff 
-inner join payment on staff.staff_id = payment.staff_id;
+select customer.last_name, sum(payment.amount) as total_payment from customer
+inner join payment on customer.customer_id = payment.customer_id;
 
 -- 7a
+select title from film where title like ";
+
 -- 7b
 -- 7c
 -- 7d
