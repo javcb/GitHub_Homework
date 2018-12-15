@@ -71,15 +71,21 @@ select title from film where film_id IN
 (select category_id from category where name IN ('Family')));
 
 -- 7e
-select inventory.film_id, count(rental.rental_id) as rental_count from inventory
-inner join rental on inventory.inventory_id = rental.inventory_id;
+select film.title as film_name, count(rental.rental_id) as rental_count from inventory
+inner join rental on inventory.inventory_id = rental.inventory_id
+inner join film on inventory.film_id = film.film_id group by film_name order by rental_count desc;
 
-select customer.last_name, sum(payment.amount) as total_payment from customer
-inner join payment on customer.customer_id = payment.customer_id;
+-- 7f: how much business, in dollars, each store brought in
+select * from sales_by_store;
 
--- 7f
--- 7g
+-- 7g: Write a query to display for each store its store ID, city, and country.
+select store.store_id, city.city, country.country from store
+inner join address on store.address_id = address.address_id
+inner join city on address.city_id = city.city_id
+inner join country on city.country_id = country.country_id;
+
 -- 7h
+select * from sales_by_film_category order by total_sales desc limit 5;
 
 -- 8a
 -- 8b
