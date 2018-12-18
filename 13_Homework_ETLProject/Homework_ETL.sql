@@ -1,3 +1,5 @@
+-- create database financials;
+
 use financials;
 
-select * from tb;
+select * from dowjones;
