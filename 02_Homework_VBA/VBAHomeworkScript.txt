@@ -1,0 +1,139 @@
+Sub WorksheetLoop()
+    Dim WS_Count As Integer
+    Dim i As Integer
+
+    ' Set WS_Count equal to the number of worksheets in the active
+    ' workbook.
+    WS_Count = ActiveWorkbook.Worksheets.Count
+
+    ' Begin the loop.
+    For i = 1 To WS_Count
+
+    ' Insert your code here.
+    ' The following line shows how to reference a sheet within
+    ' the loop by displaying the worksheet name in a dialog box.
+    Worksheets(i).Activate
+    Homework_VBA_Moderate
+
+    Next i
+
+
+End Sub
+
+'Sub SheetLoop()
+'
+'Dim ws As worksheeet
+'
+'For Each ws In Worksheets
+'    Run (Homework_VBA_Moderate)
+'
+'    ws.Activate
+'    Debug.Print ws.Name
+'
+'Next
+'
+'End Sub
+
+
+Sub Homework_VBA_Moderate()
+
+  ' Set an initial variable for holding the brand name
+  Dim ticker As String
+
+  ' Set an initial variable for holding the total per credit card brand
+  Dim TotalVolume As Double
+  TotalVolume = 0
+  
+  ' ***Set initial variables for holding open and close prices
+  Dim LastPx As Double
+  Dim OpenPx As Double
+  Dim PxChange As Double
+  Dim PxChangeBps As Double
+
+  Range("J1").Value = "Ticker"
+  Range("K1").Value = "Total Volume"
+  Range("L1").Value = "Open Price"
+  Range("M1").Value = "Close Price"
+  Range("N1").Value = "YTD Change"
+  Range("O1").Value = "YTD Change %"
+  
+  Range("Q2").Value = "Greatest % increase"
+  Range("Q3").Value = "Greatest % decrease"
+  Range("Q4").Value = "Greatest Total Vol"
+  Range("R1").Value = "Ticker"
+  Range("S1").Value = "Value"
+
+  ' Keep track of the location for each credit card brand in the summary table
+  Dim Summary_Table_Row As Integer
+  Summary_Table_Row = 2
+
+  ' Loop through all credit card purchases
+  For i = 2 To 800000
+
+    ' Check if we are still within the same credit card brand, if it is not...
+    If Cells(i - 1, 1).Value <> Cells(i, 1).Value Then
+
+      ' ***Set the price change
+      OpenPx = Cells(i, 3).Value
+      Range("L" & Summary_Table_Row).Value = OpenPx
+    
+    ' Check if we are still within the same credit card brand, if it is not...
+    ElseIf Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+
+      ' ***Set the price change
+      LastPx = Cells(i, 6).Value
+      Range("M" & Summary_Table_Row).Value = LastPx
+      PxChange = LastPx - OpenPx
+      Range("N" & Summary_Table_Row).Value = PxChange
+      
+        For j = 2 To Summary_Table_Row
+
+            ' If we are on a cell that is divisible by 2 then color it black
+            If (Cells(j, 14) > 0) Then
+                Cells(j, 14).Interior.ColorIndex = 4
+
+            ' Otherwise color it red
+            Else
+
+                Cells(j, 14).Interior.ColorIndex = 3
+
+            End If
+
+            ' Add one to our cell number each time
+            cellnumber = cellnumber + 1
+
+        Next j
+      
+      PxChangeBps = (LastPx - OpenPx) / OpenPx
+      Range("O" & Summary_Table_Row).Value = PxChangeBps
+      Range("O" & Summary_Table_Row).NumberFormat = "0.00%"
+      
+      ' Set the Brand name
+      ticker = Cells(i, 1).Value
+
+      ' Add to the Brand Total
+      TotalVolume = Brand_Total + Cells(i, 7).Value
+
+      ' Print the Credit Card Brand in the Summary Table
+      Range("J" & Summary_Table_Row).Value = ticker
+
+      ' Print the Brand Amount to the Summary Table
+      Range("K" & Summary_Table_Row).Value = TotalVolume
+
+      ' Add one to the summary table row
+      Summary_Table_Row = Summary_Table_Row + 1
+      
+      ' Reset the Brand Total
+      TotalVolume = 0
+
+    ' If the cell immediately following a row is the same brand...
+    Else
+
+      ' Add to the Brand Total
+      TotalVolume = TotalVolume + Cells(i, 3).Value
+
+    End If
+
+  Next i
+
+End Sub

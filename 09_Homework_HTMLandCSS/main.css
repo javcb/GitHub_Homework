@@ -1,0 +1,38 @@
+.jumbotron {
+    text-align: center;
+    background: none;
+}
+
+.sectionLight {
+    background-color: #eceeef;
+    padding: 2rem;
+}
+
+.sectionDark {
+    background-color: #cccccc;
+    padding: 2rem;
+}
+
+.footerImg {
+    padding: 15px;
+}
+
+.fa {
+    margin: 10px;
+}
+
+.fa-facebook-square {
+  color:   #3b5998;
+}
+
+.fa-google-plus-square {
+    color:   #c32f10;
+  }
+
+.fa-instagram {
+    color:   black;
+  }
+
+.socialWrapper {
+    margin: auto;
+}
