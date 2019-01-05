@@ -7,13 +7,13 @@ import io
 from zipfile import ZipFile
 import urllib.request
 import re
-from lxml import html
+#from lxml import html
 from splinter import Browser
 import pymongo
 
 
 def scrape():
-    executable_path = {'executable_path': '/usr/local/bin/chromedriver'}
+    executable_path = {'executable_path': 'chromedriver'}
     browser = Browser('chrome', **executable_path, headless=False)
 
 # URL of page to be scraped
@@ -33,7 +33,7 @@ def scrape():
 
     print(news_paragraph)
 
-    executable_path = {'executable_path': '/usr/local/bin/chromedriver'}
+    executable_path = {'executable_path': 'chromedriver'}
     browser = Browser('chrome', **executable_path, headless=False)
 
 # URL of page to be scraped
@@ -91,50 +91,50 @@ def scrape():
     facts_df_html
 
 
-# URL of page to be scraped
-    hemisphere_url = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
-    browser.visit(hemisphere_url)
+# # URL of page to be scraped
+#     hemisphere_url = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
+#     browser.visit(hemisphere_url)
 
-# HTML object
-    html = browser.html
-# Parse HTML with Beautiful Soup
-    soup = bs(html, "html.parser")
+# # HTML object
+#     html = browser.html
+# # Parse HTML with Beautiful Soup
+#     soup = bs(html, "html.parser")
 
-    hemisphere = []
-# Retrieve elements
-    results = soup.find_all("div", class_="item")
-# Loop through results 
-    for result in results:
-        hemisphere_dict = {}
-        # Use Beautiful Soup's find() method to navigate and retrieve attributes
-        h3 = result.find("h3").text
-        href = result.find("div", class_="description").a["href"]
-        title = 'https://astrogeology.usgs.gov' + href
+#     hemisphere = []
+# # Retrieve elements
+#     results = soup.find_all("div", class_="item")
+# # Loop through results 
+#     for result in results:
+#         hemisphere_dict = {}
+#         # Use Beautiful Soup's find() method to navigate and retrieve attributes
+#         h3 = result.find("h3").text
+#         href = result.find("div", class_="description").a["href"]
+#         title = 'https://astrogeology.usgs.gov' + href
     
-        browser.visit(title)
+#         browser.visit(title)
     
-    # HTML object
-        html = browser.html
-    # Parse HTML with Beautiful Soup
-        soup = bs(html, "html.parser")
-    # Retrieve elements
-        url = soup.find("img", class_="wide-image")["src"]
+#     # HTML object
+#         html = browser.html
+#     # Parse HTML with Beautiful Soup
+#         soup = bs(html, "html.parser")
+#     # Retrieve elements
+#         url = soup.find("img", class_="wide-image")["src"]
 
-        hemisphere_dict["title"] = h3
-        hemisphere_dict["img_url"] = 'https://astrogeology.usgs.gov' + url
-        print(hemisphere_dict["img_url"])
+#         hemisphere_dict["title"] = h3
+#         hemisphere_dict["img_url"] = 'https://astrogeology.usgs.gov' + url
+#         print(hemisphere_dict["img_url"])
     
-        hemisphere.append(hemisphere_dict)
+#         hemisphere.append(hemisphere_dict)
 
-        hemisphere
+#         hemisphere
 
     mars_data = {
      "news_title": news_title,
      "news_paragraph": news_paragraph,
      "featured_image_url": featured_image_url ,
      "facts_df_html": facts_df_html,
-     "mars_weather": mars_weather,
-     "hemisphere": hemisphere
+     "mars_weather": mars_weather
+    #  "hemisphere": hemisphere
      }
 
     return mars_data
